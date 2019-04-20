@@ -13,6 +13,8 @@ collections:
   - name: "blog" # Used in routes, e.g., /admin/collections/blog
     label: "Blog" # Used in the UI
     folder: ".content/posts/blog" # The path to the folder where the documents are stored
+    extension: "json"
+    format: "json"
     create: true # Allow users to create new documents in this collection
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
     fields: # The fields for each document, usually in front matter
@@ -27,7 +29,7 @@ collections:
     files:
       - name: "home"
         label: "Home"
-        file: ".content/pages/home.md"
+        file: ".content/pages/home.json"
         fields:
           - { label: Title, name: title, widget: string, required: true }
           - { label: Punchline, name: punchline, widget: text }
