@@ -1,5 +1,6 @@
 const pkg = require("./package");
 const { resolve } = require("path");
+const glob = require("glob");
 require("dotenv").config();
 
 module.exports = {
@@ -142,6 +143,27 @@ module.exports = {
    ** Generate
    */
   generate: {
-    routes: [`/admin/${process.env.ADMIN_URL}`]
+    routes: function() {
+      const _map = [];
+
+      // CMS admin route
+      _map.push(`/admin/${process.env.ADMIN_URL}`);
+      // CMS posts content
+      _map.push(
+        ...glob
+          .sync(".content/posts/**/*.json", { nodir: true })
+          .map(i => i.replace(".content/posts/", ""))
+      );
+      // CMS pages content
+      _map.push(
+        ...glob
+          .sync(".content/pages/**/*.json", { nodir: true })
+          .map(i => i.replace(".content/pages/", ""))
+      );
+
+      console.log(_map);
+
+      return _map;
+    }
   }
 };
