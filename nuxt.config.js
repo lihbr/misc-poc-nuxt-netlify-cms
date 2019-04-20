@@ -6,8 +6,8 @@ module.exports = {
   mode: "universal",
 
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
     title: process.env.APP_NAME || pkg.name,
     htmlAttrs: {
@@ -67,23 +67,23 @@ module.exports = {
   },
 
   /*
-  ** Customize the progress-bar color
-  */
+   ** Customize the progress-bar color
+   */
   loading: { color: "#000" },
 
   /*
-  ** Global CSS
-  */
+   ** Global CSS
+   */
   css: ["~/assets/vendor/css/reset.css"],
 
   /*
-  ** Plugins to load before mounting the App
-  */
+   ** Plugins to load before mounting the App
+   */
   plugins: ["~/plugins/globals.js"],
 
   /*
-  ** Nuxt.js modules
-  */
+   ** Nuxt.js modules
+   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     "@nuxtjs/axios",
@@ -94,20 +94,20 @@ module.exports = {
     ]
   ],
   /*
-  ** Axios module configuration
-  */
+   ** Axios module configuration
+   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     // baseURL: process.env.API_URL
   },
 
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     /*
-    ** You can extend webpack config here
-    */
+     ** You can extend webpack config here
+     */
     extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
@@ -122,19 +122,26 @@ module.exports = {
   },
 
   /*
-  ** Server configuration
-  */
+   ** Server configuration
+   */
   server: {
     host: process.env.HOST || "0.0.0.0",
     port: process.env.PORT || 3000
   },
 
   /*
-  ** Env
-  */
+   ** Env
+   */
   env: {
     // api_url: process.env.API_URL,
     pkg_name: process.env.NAME || pkg.name,
     pkg_desc: process.env.DESC || pkg.description
+  },
+
+  /*
+   ** Generate
+   */
+  generate: {
+    routes: [`/admin/${process.env.ADMIN_URL}`]
   }
 };

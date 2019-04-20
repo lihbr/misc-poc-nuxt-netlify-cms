@@ -1,0 +1,12 @@
+[build]
+  publish = "dist/"
+  command = "yarn run generate"
+
+[context.production]
+  command = "BASE_URL=$URL yarn run generate"
+
+[context.deploy-preview]
+  command = "BASE_URL=$DEPLOY_PRIME_URL yarn run generate"
+
+[context.branch-deploy]
+  command = "BASE_URL=$DEPLOY_URL yarn run generate"
