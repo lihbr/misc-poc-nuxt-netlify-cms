@@ -146,8 +146,6 @@ module.exports = {
     routes: function() {
       const _map = [];
 
-      // CMS admin route
-      _map.push(`/admin/${process.env.ADMIN_URL}`);
       // CMS posts content
       _map.push(
         ...glob
