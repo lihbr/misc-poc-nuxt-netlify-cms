@@ -1,11 +1,23 @@
 <template>
   <div class="home">
-    home
+    <h1>{{ data.title }}</h1>
+    <h2>{{ data.punchline }}</h2>
+    <Markdown :src="data.body" />
+    <SmartLink
+      v-for="post in blogPosts"
+      :key="post.slug"
+      :href="post.route"
+      :title="post.title"
+    >
+      {{ post.title }}
+    </SmartLink>
   </div>
 </template>
 
 <script>
-// import Component from '~/components/Component.vue'
+import data from "~/.content/pages/index.json";
+
+// import Component from "~/components/Component.vue"
 
 export default {
   components: {
@@ -18,13 +30,19 @@ export default {
       ]
     };
   },
+  data() {
+    return {
+      data,
+      blogPosts: process.env.cms.blogPosts
+    };
+  },
   mounted() {
     // Netlify CMS redirect
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
         if (!user) {
           window.netlifyIdentity.on("login", () => {
-            document.location.href = `/_admin/${process.env.ADMIN_URL}`;
+            document.location.href = "_admin";
           });
         }
       });

@@ -1,36 +1,42 @@
 backend:
   name: git-gateway
   branch: master # Branch to update (optional; defaults to master)
+  squash_merges: true
+  commit_messages:
+    create: ":sparkles: create {{collection}} > {{slug}}"
+    update: ":pencil2: update {{collection}} > {{slug}}"
+    delete: ":fire: delete {{collection}} > {{slug}}"
+    uploadMedia: ":bento: upload {{path}}"
+    deleteMedia: ":fire: delete: {{path}}"
   accept_roles: #optional - accepts all users if left out
     - root
 
 publish_mode: editorial_workflow
 
-media_folder: "static/assets/img/uploads" # Media files will be stored in the repo under static/assets/img/uploads
-public_folder: "/assets/img/uploads" # The src attribute for uploaded media will begin with /assets/img/uploads
+# media_folder: "static/assets/img/uploads" # Media files will be stored in the repo under static/assets/img/uploads
+# public_folder: "/assets/img/uploads" # The src attribute for uploaded media will begin with /assets/img/uploads
 
 collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - name: "index"
+        label: "Home"
+        file: ".content/pages/index.json"
+        fields:
+          - { label: Title, name: title, widget: string, required: true }
+          - { label: Punchline, name: punchline, widget: text }
+          - { label: Content, name: body, widget: markdown }
+
   - name: "blog" # Used in routes, e.g., /admin/collections/blog
     label: "Blog" # Used in the UI
     folder: ".content/posts/blog" # The path to the folder where the documents are stored
     extension: "json"
     format: "json"
     create: true # Allow users to create new documents in this collection
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
     fields: # The fields for each document, usually in front matter
       - { label: "Title", name: "title", widget: "string", required: true }
       - { label: "Publish Date", name: "date", widget: "datetime" }
       - { label: Punchline, name: punchline, widget: text }
-      - { label: "Featured Image", name: "thumbnail", widget: "image" }
       - { label: "Body", name: "body", widget: "markdown", required: true }
-
-  - name: "pages"
-    label: "Pages"
-    files:
-      - name: "home"
-        label: "Home"
-        file: ".content/pages/home.json"
-        fields:
-          - { label: Title, name: title, widget: string, required: true }
-          - { label: Punchline, name: punchline, widget: text }
-          - { label: Content, name: body, widget: markdown }
