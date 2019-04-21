@@ -1,7 +1,14 @@
 const pkg = require("./package");
 const { resolve } = require("path");
-const glob = require("glob");
 require("dotenv").config();
+
+const { generateStaticRoutes, blogPosts } = require("./assets/js/static");
+
+const APP_NAME = process.env.APP_NAME || pkg.name;
+const APP_DESC = process.env.APP_DESC || pkg.description;
+const APP_HOST = process.env.APP_HOST || "0.0.0.0";
+const APP_PORT = process.env.APP_PORT || 3000;
+const APP_URL = process.env.APP_URL || `http://${APP_HOST}:${APP_PORT}`;
 
 module.exports = {
   mode: "universal",
@@ -10,7 +17,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: process.env.APP_NAME || pkg.name,
+    title: APP_NAME,
     htmlAttrs: {
       lang: "en"
     },
@@ -23,7 +30,7 @@ module.exports = {
       {
         hid: "description",
         name: "description",
-        content: process.env.APP_DESC || pkg.description
+        content: APP_DESC
       },
       { name: "msapplication-TileColor", content: "#2b5797" },
       { name: "theme-color", content: "#ffffff" }
@@ -88,18 +95,29 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     "@nuxtjs/axios",
+    "@nuxtjs/sitemap",
     "cookie-universal-nuxt",
     [
       "nuxt-stylus-resources-loader",
       resolve(__dirname, "assets/stylus/main.styl")
     ]
   ],
+
   /*
    ** Axios module configuration
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     // baseURL: process.env.API_URL
+  },
+
+  /*
+   ** Sitemap
+   */
+  sitemap: {
+    hostname: APP_URL,
+    gzip: true,
+    exclude: ["/admin/**"]
   },
 
   /*
@@ -126,8 +144,8 @@ module.exports = {
    ** Server configuration
    */
   server: {
-    host: process.env.HOST || "0.0.0.0",
-    port: process.env.PORT || 3000
+    host: APP_HOST,
+    port: APP_PORT
   },
 
   /*
@@ -135,8 +153,11 @@ module.exports = {
    */
   env: {
     // api_url: process.env.API_URL,
-    pkg_name: process.env.NAME || pkg.name,
-    pkg_desc: process.env.DESC || pkg.description
+    app_name: APP_NAME,
+    app_desc: APP_DESC,
+    cms: {
+      blogPosts
+    }
   },
 
   /*
@@ -146,20 +167,14 @@ module.exports = {
     routes: function() {
       const _map = [];
 
-      // CMS posts content
-      _map.push(
-        ...glob
-          .sync(".content/posts/**/*.json", { nodir: true })
-          .map(i => i.replace(".content/posts/", ""))
-      );
-      // CMS pages content
-      _map.push(
-        ...glob
-          .sync(".content/pages/**/*.json", { nodir: true })
-          .map(i => i.replace(".content/pages/", ""))
-      );
+      const staticRoutes = generateStaticRoutes();
 
-      console.log(_map);
+      _map.push(...staticRoutes);
+
+      // Add url to each route
+      _map.forEach(i => {
+        if (typeof i === "object") i.url = i.route;
+      });
 
       return _map;
     }

@@ -16,5 +16,24 @@
   <body>
     <!-- Include the script that builds the page and powers Netlify CMS -->
     <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/cms.js"></script>
+    <script>
+      window.CMS_MANUAL_INIT = true;
+
+      // Usage with script tag
+      const { CMS, initCMS: init } = window;
+
+      init({
+        config: {
+          media_library: {
+            name: "cloudinary",
+            use_secure_url: true,
+            config: {
+              cloud_name: "lihbr",
+              api_key: 941346873433712
+            }
+          }
+        }
+      });
+    </script>
   </body>
 </html>
