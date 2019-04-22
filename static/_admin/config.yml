@@ -18,8 +18,8 @@ publish_mode: editorial_workflow
 
 # back office
 site_url: https://template-netlify-cms.netlify.com
-display_url: http://template-netlify-cms.netlify.com
-logo_url: http://localhost:3000/assets/img/admin_logo.svg
+display_url: https://template-netlify-cms.netlify.com
+logo_url: http://template-netlify-cms.netlify.com/assets/img/admin_logo.svg
 
 # enable to display preview links
 show_preview_links: false
