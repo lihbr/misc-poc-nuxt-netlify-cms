@@ -3,11 +3,11 @@ backend:
   branch: master # Branch to update (optional; defaults to master)
   squash_merges: true
   commit_messages:
-    create: ":sparkles: create {{collection}} > {{slug}}"
-    update: ":pencil2: update {{collection}} > {{slug}}"
-    delete: ":fire: delete {{collection}} > {{slug}}"
-    uploadMedia: ":bento: upload {{path}}"
-    deleteMedia: ":fire: delete: {{path}}"
+    create: ":sparkles: Create {{collection}} > {{slug}}"
+    update: ":pencil2: Update {{collection}} > {{slug}}"
+    delete: ":fire: Delete {{collection}} > {{slug}}"
+    uploadMedia: ":bento: Upload {{path}}"
+    deleteMedia: ":fire: Delete: {{path}}"
   accept_roles: #optional - accepts all users if left out
     - root
 
@@ -22,68 +22,58 @@ display_url: https://template-netlify-cms.netlify.com
 logo_url: http://template-netlify-cms.netlify.com/assets/img/admin_logo.svg
 
 # enable to display preview links
-show_preview_links: false
+show_preview_links: true
 
 # slug
 slug:
-  encoding: "ascii"
+  encoding: ascii
   clean_accents: true
   sanitize_replacement: "_"
 
 # collections
 collections:
-  - name: "pages"
-    label: "Pages"
-    label_singular: "Page"
+  - name: pages
+    label: Pages
+    label_singular: Page
     description: "Static pages of the website"
+    extension: json
+    format: json
     files:
-      - name: "index"
-        label: "Home"
+      - name: index
+        label: Home
         file: ".content/pages/index.json"
         fields:
-          - { label: Title, name: title, widget: string, required: true }
-          - { label: Punchline, name: punchline, widget: text }
-          - { label: Content, name: body, widget: markdown }
+          - { name: title, label: Title, widget: string }
+          - { name: punchline, label: Punchline, widget: text }
+          - {
+              name: featured,
+              label: "Featured Blog Post",
+              widget: relation,
+              collection: blog,
+              searchFields: [title, punchline],
+              valueField: title,
+              displayFields: [title],
+            }
 
-  - name: "blog" # Used in routes, e.g., /admin/collections/blog
-    label: "Blog Posts" # Used in the UI
-    label_singular: "Blog Post"
-    description: "Basic blog posts"
-    folder: ".content/posts/blog" # The path to the folder where the documents are stored
-    extension: "json"
-    format: "json"
+  - name: blog
+    label: Blog Posts
+    label_singular: Blog Post
+    description: Basic blog posts
+    folder: ".content/posts/blog"
+    extension: json
+    format: json
     create: true # Allow users to create new documents in this collection
-    slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
-    fields: # The fields for each document, usually in front matter
-      - { label: "Title", name: "title", widget: "string", required: true }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: Punchline, name: punchline, widget: text }
-      - { label: "Body", name: "body", widget: "markdown", required: true }
-
-  - label: "Blog in English"
-    name: "english_posts"
-    folder: ".content/posts/test"
-    filter: { field: "language", value: "en" }
+    slug: "{{slug}}"
+    preview_path: "blog/{{slug}}"
     fields:
+      - { name: date, label: "Publish Date", widget: date, format: L }
+      - { name: title, label: Title, widget: string }
       - {
-          label: "Language",
-          name: "language",
-          widget: "select",
-          options: ["en", "es"],
+          name: featured_image,
+          label: "Featured image",
+          widget: "image",
+          media_library: { config: { multiple: false } },
         }
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Content", name: "body", widget: "markdown" }
-
-  - label: "Blog en Español"
-    name: "spanish_posts"
-    folder: ".content/posts/test"
-    filter: { field: "language", value: "es" }
-    fields:
-      - {
-          label: "Lenguaje",
-          name: "language",
-          widget: "select",
-          options: ["en", "es"],
-        }
-      - { label: "Titulo", name: "title", widget: "string" }
-      - { label: "Contenido", name: "body", widget: "markdown" }
+      - { name: lead, label: Lead Paragraph, widget: text }
+      - { name: body, label: Body, widget: markdown }
+    summary: "{{title}} | {{lead}}"
