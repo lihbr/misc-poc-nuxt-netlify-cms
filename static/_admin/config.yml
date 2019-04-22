@@ -16,9 +16,26 @@ publish_mode: editorial_workflow
 # media_folder: "static/assets/img/uploads" # Media files will be stored in the repo under static/assets/img/uploads
 # public_folder: "/assets/img/uploads" # The src attribute for uploaded media will begin with /assets/img/uploads
 
+# back office
+site_url: https://template-netlify-cms.netlify.com
+display_url: http://template-netlify-cms.netlify.com
+logo_url: http://localhost:3000/assets/img/admin_logo.svg
+
+# enable to display preview links
+show_preview_links: false
+
+# slug
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "_"
+
+# collections
 collections:
   - name: "pages"
     label: "Pages"
+    label_singular: "Page"
+    description: "Static pages of the website"
     files:
       - name: "index"
         label: "Home"
@@ -29,7 +46,9 @@ collections:
           - { label: Content, name: body, widget: markdown }
 
   - name: "blog" # Used in routes, e.g., /admin/collections/blog
-    label: "Blog" # Used in the UI
+    label: "Blog Posts" # Used in the UI
+    label_singular: "Blog Post"
+    description: "Basic blog posts"
     folder: ".content/posts/blog" # The path to the folder where the documents are stored
     extension: "json"
     format: "json"
@@ -40,3 +59,31 @@ collections:
       - { label: "Publish Date", name: "date", widget: "datetime" }
       - { label: Punchline, name: punchline, widget: text }
       - { label: "Body", name: "body", widget: "markdown", required: true }
+
+  - label: "Blog in English"
+    name: "english_posts"
+    folder: ".content/posts/test"
+    filter: { field: "language", value: "en" }
+    fields:
+      - {
+          label: "Language",
+          name: "language",
+          widget: "select",
+          options: ["en", "es"],
+        }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Content", name: "body", widget: "markdown" }
+
+  - label: "Blog en Español"
+    name: "spanish_posts"
+    folder: ".content/posts/test"
+    filter: { field: "language", value: "es" }
+    fields:
+      - {
+          label: "Lenguaje",
+          name: "language",
+          widget: "select",
+          options: ["en", "es"],
+        }
+      - { label: "Titulo", name: "title", widget: "string" }
+      - { label: "Contenido", name: "body", widget: "markdown" }
