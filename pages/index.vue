@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       data,
-      blogPosts: process.env.cms.blogPosts
+      blogPosts: process.env.cms_blogPosts
     };
   },
   mounted() {

@@ -86,6 +86,10 @@ const getPosts = (type = "**", fields = [], onlyPayload = false) => {
   return onlyPayload ? result.map(i => i.payload) : result;
 };
 
-const blogPosts = getPosts("blog", ["title"], true);
+const blogPosts = getPosts(
+  "blog",
+  ["date", "title", "featured_image", "lead"],
+  true
+);
 
 export { generateStaticRoutes, getPosts, blogPosts };
