@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     output() {
-      return marked(this.src);
+      return marked(this.src.replace(/</g, "&lt;").replace(/>/g, "&gt;"));
     }
   }
 };
