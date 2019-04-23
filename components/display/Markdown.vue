@@ -24,7 +24,17 @@ export default {
 };
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus">
 .markdown
-  cursor auto
+  p
+    margin-bottom smallMargin
+
+  img
+    max-height 50vh
+    max-width 100%
+    display block
+    margin 0 auto
+
+  a
+    text-decoration underline
 </style>
