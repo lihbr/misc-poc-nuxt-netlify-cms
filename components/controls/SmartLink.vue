@@ -42,3 +42,9 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="stylus">
+.smartLink a
+  display inherit
+  flex-flow inherit
+</style>

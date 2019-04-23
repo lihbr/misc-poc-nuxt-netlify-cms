@@ -17,7 +17,7 @@ html
   -webkit-font-smoothing antialiased
   box-sizing border-box
   color black
-  background white
+  background whiteSoft
 
 .main
   min-height 100vh
