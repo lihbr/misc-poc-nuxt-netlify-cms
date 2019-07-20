@@ -1,8 +1,6 @@
-# PROJECT_NAME
+# misc-poc-netlify-cms
 
-This is a school project at [HETIC](https://www.hetic.net/)
-
-Visit site [here](PROJECT_LINK)!
+Visit site [here](https://poc-netlify-cms.netlify.com/)!
 
 ## Build Setup
 
