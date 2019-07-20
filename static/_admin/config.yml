@@ -17,9 +17,9 @@ publish_mode: editorial_workflow
 # public_folder: "/assets/img/uploads" # The src attribute for uploaded media will begin with /assets/img/uploads
 
 # back office
-site_url: https://template-netlify-cms.netlify.com
-display_url: https://template-netlify-cms.netlify.com
-logo_url: http://template-netlify-cms.netlify.com/assets/img/admin_logo.svg
+site_url: https://poc-netlify-cms.netlify.com
+display_url: https://poc-netlify-cms.netlify.com
+logo_url: http://poc-netlify-cms.netlify.com/assets/img/admin_logo.svg
 
 # enable to display preview links
 show_preview_links: true
