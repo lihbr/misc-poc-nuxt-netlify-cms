@@ -2,7 +2,7 @@
   "name": "template-netlify-cms",
   "version": "1.0.0",
   "description": "A Netlify CMS starter pack to build app",
-  "author": "edhbr",
+  "author": "lihbr <hello@lihbr.com> (https://lihbr.com)",
   "private": true,
   "scripts": {
     "dev": "nuxt",
